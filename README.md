@@ -2,83 +2,82 @@
 
 A simple and customizable flutter package for inputting phone number in intl / international format uses Google's libphonenumber
 
-| CustomDecoration | CustomBorder | Default |
-|----------|-------------|--------|
+| CustomDecoration                                                                                                                                                       | CustomBorder                                                                                                                                                           | Default                                                                                                                                                                |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | <img src="https://user-images.githubusercontent.com/27495055/80114512-9544b100-857b-11ea-9292-9c9c3eaf93e0.png" width="240" height="430" alt="Screenshot_1587652933"/> | <img src="https://user-images.githubusercontent.com/27495055/80115521-beb20c80-857c-11ea-9902-41c444a3bd33.png" width="240" height="430" alt="Screenshot_1587652933"/> | <img src="https://user-images.githubusercontent.com/27495055/80116034-63344e80-857d-11ea-9922-1062b4320503.png" width="240" height="430" alt="Screenshot_1587652933"/> |
 
-| Web |
-|-----|
-| <img src="https://user-images.githubusercontent.com/27495055/103301956-c9257f80-4a02-11eb-8385-01564c2ec875.png" width=420 height=550></img>  |
-
+| Web                                                                                                                                          |
+| -------------------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="https://user-images.githubusercontent.com/27495055/103301956-c9257f80-4a02-11eb-8385-01564c2ec875.png" width=420 height=550></img> |
 
 ### What's new
-  - Null Safety Migration
-  - Upgraded dependencies
-  - <b>Breaking Change</b> Depreciated `SelectorConfig.backgroundColor` and replaced with `Theme.of(context).canvasColor`
-  - Fixed Dominican Republic dial_code at country_list.dart #196
-  - Fixed change country when initialValue is set with the widget #170
-  - Fixed PhoneNumberUtil.getNumberType on mobile and web #188
-  - Added translations for Turkish and Romanian #190
-  - Updated Taiwan country name #181
-  - Added style config for selector button #177
-  - Removed any potential duplicates on countries list #175
-  - Fixed ignore selector and text field spacing in prefixIcon mode #161
-  - :sweat_smile: Well, Actually using cursorColor #160
-  - Fixed initialValue should not be formatted if formatInput is false #192
-  - Fixed Bottom Sheet RenderFlex overflow bug #187, similar to Search by Country name or dial code bug #197
-  - Updated README.md file to fix Web release does not recognize the packages #186
-  - Fixed onSaved callback in the InternationalPhoneNumberInput is not synchronous #180
-  - Cherry picked pending fixes and pull request from repo.
-  
-  
+
+- Null Safety Migration
+- Upgraded dependencies
+- <b>Breaking Change</b> Depreciated `SelectorConfig.backgroundColor` and replaced with `Theme.of(context).canvasColor`
+- Fixed Dominican Republic dial_code at country_list.dart #196
+- Fixed change country when initialValue is set with the widget #170
+- Fixed PhoneNumberUtil.getNumberType on mobile and web #188
+- Added translations for Turkish and Romanian #190
+- Updated Taiwan country name #181
+- Added style config for selector button #177
+- Removed any potential duplicates on countries list #175
+- Fixed ignore selector and text field spacing in prefixIcon mode #161
+- :sweat_smile: Well, Actually using cursorColor #160
+- Fixed initialValue should not be formatted if formatInput is false #192
+- Fixed Bottom Sheet RenderFlex overflow bug #187, similar to Search by Country name or dial code bug #197
+- Updated README.md file to fix Web release does not recognize the packages #186
+- Fixed onSaved callback in the InternationalPhoneNumberInput is not synchronous #180
+- Cherry picked pending fixes and pull request from repo.
+
 ### Features
-  - Web support.
-  - Support for RTL languages
-  - Selector mode dropdown, bottom sheet and dialog
-  - As You Type Formatter: formats inputs to its selected international format
-  - Get Region Info with PhoneNumber.getRegionInfoFromPhoneNumber(String phoneNumber, [String isoCode]);
-  - Format PhoneNumber with PhoneNumber.getParsableNumber(String phoneNumber, String isoCode) or `PhoneNumber Reference`.parseNumber()
-  - Custom list of countries e.g. ['NG', 'GH', 'BJ' 'TG', 'CI']
-    
+
+- Web support.
+- Support for RTL languages
+- Selector mode dropdown, bottom sheet and dialog
+- As You Type Formatter: formats inputs to its selected international format
+- Get Region Info with PhoneNumber.getRegionInfoFromPhoneNumber(String phoneNumber, [String isoCode]);
+- Format PhoneNumber with PhoneNumber.getParsableNumber(String phoneNumber, String isoCode) or `PhoneNumber Reference`.parseNumber()
+- Custom list of countries e.g. ['NG', 'GH', 'BJ' 'TG', 'CI']
+
 ```dart
     String phoneNumber =  '+234 500 500 5005';
     PhoneNumber number = await PhoneNumber.getRegionInfoFromPhoneNumber(phoneNumber);
     String parsableNumber = number.parseNumber();
     `controller reference`.text = parsableNumber
-```    
+```
 
 ### Web Support
 
 In your app directory, edit `web/index.html` to add the following
 
 ```html
-
 <!DOCTYPE html>
 <html>
-    <head>
-        ...
-    </head>
-    <body>
-    
-        ...
+  <head>
+    ...
+  </head>
+  <body>
+    ...
 
-        <script src="assets/packages/libphonenumber_plugin/js/libphonenumber.js"></script>
-        <script src="assets/packages/libphonenumber_plugin/js/stringbuffer.js"></script>
+    <script src="assets/packages/libphonenumber_plugin/js/libphonenumber.js"></script>
+    <script src="assets/packages/libphonenumber_plugin/js/stringbuffer.js"></script>
 
-        ...
+    ...
 
-        <script src="main.dart.js" type="application/javascript"></script>
-    </body>
+    <script src="main.dart.js" type="application/javascript"></script>
+  </body>
 </html>
 ```
 
 Or checkout `/example` folder from [Github](https://github.com/natintosh/intl_phone_number_input/tree/develop/example).
 
-
 ### Note
-``` dart
+
+```dart
     PhoneNumber.getRegionInfoFromPhoneNumber(String phoneNumber, [String isoCode])
 ```
+
 > Could throw an Exception if the phoneNumber isn't recognised its a good pattern to pass the country's isoCode or have '+' at the beginning of the string
 
 > isoCode could be null if PhoneNumber is not recognised
@@ -87,13 +86,13 @@ Or checkout `/example` folder from [Github](https://github.com/natintosh/intl_ph
 
 ### Constructors
 
-| s/n | Constructor                                             |
-| --- | ------------------------------------------------------- |
-|  1  | InternationalPhoneNumberInput                           |
+| s/n | Constructor                   |
+| --- | ----------------------------- |
+| 1   | InternationalPhoneNumberInput |
 
 ## Available Parameters
 
-```dart
+````dart
 InternationalPhoneNumberInput({
     Key key,
       this.selectorConfig = const SelectorConfig(),
@@ -144,60 +143,64 @@ SelectorConfig({
     this.countryComparator,
     this.setSelectorButtonAsPrefixIcon = false,
 });
-```
+````
 
-| Parameter                           | Datatype               |    Initial Value          |
-|---------------------------------    |------------------------|---------------------------|
-| onInputChanged                      | function(PhoneNumber)  |        null               |
-| onSaved                             | function(PhoneNumber)  |        null               |
-| onInputValidated                    | function(bool)         |        null               |
-| focusNode                           | FocusNode              |        null               |
-| textFieldController                 | TextEditingController  |   TextEditingController() |
-| onSubmit                            | Function()             |        null               |
-| keyboardAction                      | TextInputAction        |        null               |
-| keyboardType                        | TextInputType          |   TextInputType.phone     |
-| countries                           | List<string>           |        null               |
-| textStyle                           | TextStyle              |        null               |
-| selectorTextStyle                   | TextStyle              |        null               |
-| inputBorder                         | InputBorder            |        null               |
-| inputDecoration                     | InputDecoration        |        null               |
-| initialValue                        | PhoneNumber            |        null               |
-| hintText                            | String                 |     Phone Number          |
-| selectorButtonOnErrorPadding        | double                 |        24                 |
-| spaceBetweenSelectorAndTextField    | double                 |        12                 |
-| maxLength                           | integer                |        15                 |
-| isEnabled                           | boolean                |        true               |
-| autoFocus                           | boolean                |        false              |
-| autoValidateMode                    | AutoValidateMode       | AutoValidateMode.disabled |
-| formatInput                         | boolean                |        true               |
-| errorMessage                        | String                 | Invalid phone number      |
-| selectorConfig                      | SelectorConfig         | SelectorConfig()          |
-| ignoreBlank                         | boolean                |       false               |
-| locale                              | String                 |       null                |
-| searchBoxDecoration                 | InputDecoration        |        null               |
-| textAlign                           | TextAlign              |   TextAlign.start         |
-| textAlignVertical                   | TextAlignVertical      | TextAlignVertical.center  |
-| scrollPadding                       | EdgeInsets             | EdgeInsets.all(20.0)      |
-| countrySelectorScrollControlled     | boolean                |        true               |
-| cursorColor                         | String     \            |       null                |
-| autofillHints                       | Iterable<String>       |       null                |
+| Parameter                        | Datatype              | Initial Value             |
+| -------------------------------- | --------------------- | ------------------------- |
+| onInputChanged                   | function(PhoneNumber) | null                      |
+| onSaved                          | function(PhoneNumber) | null                      |
+| onInputValidated                 | function(bool)        | null                      |
+| focusNode                        | FocusNode             | null                      |
+| textFieldController              | TextEditingController | TextEditingController()   |
+| onSubmit                         | Function()            | null                      |
+| keyboardAction                   | TextInputAction       | null                      |
+| keyboardType                     | TextInputType         | TextInputType.phone       |
+| countries                        | List<string>          | null                      |
+| textStyle                        | TextStyle             | null                      |
+| selectorTextStyle                | TextStyle             | null                      |
+| inputBorder                      | InputBorder           | null                      |
+| inputDecoration                  | InputDecoration       | null                      |
+| initialValue                     | PhoneNumber           | null                      |
+| hintText                         | String                | Phone Number              |
+| selectorButtonOnErrorPadding     | double                | 24                        |
+| spaceBetweenSelectorAndTextField | double                | 12                        |
+| maxLength                        | integer               | 15                        |
+| isEnabled                        | boolean               | true                      |
+| autoFocus                        | boolean               | false                     |
+| autoValidateMode                 | AutoValidateMode      | AutoValidateMode.disabled |
+| formatInput                      | boolean               | true                      |
+| errorMessage                     | String                | Invalid phone number      |
+| selectorConfig                   | SelectorConfig        | SelectorConfig()          |
+| ignoreBlank                      | boolean               | false                     |
+| locale                           | String                | null                      |
+| searchBoxDecoration              | InputDecoration       | null                      |
+| textAlign                        | TextAlign             | TextAlign.start           |
+| textAlignVertical                | TextAlignVertical     | TextAlignVertical.center  |
+| scrollPadding                    | EdgeInsets            | EdgeInsets.all(20.0)      |
+| countrySelectorScrollControlled  | boolean               | true                      |
+| cursorColor                      | String \              | null                      |
+| autofillHints                    | Iterable<String>      | null                      |
 
 ### Selector Types
-| DROPDOWN | BOTTOMSHEET | DIALOG |
-|----------|-------------|--------|
-| <img src="https://user-images.githubusercontent.com/27495055/80116593-10a76200-857e-11ea-9600-f2cfef5b2965.png" height="430" alt="Screenshot_1587652933"/>         | <img src="https://user-images.githubusercontent.com/27495055/80116677-261c8c00-857e-11ea-8167-a3de563287f4.png" width="240" height="430" alt="Screenshot_1587652933"/>            | <img src="https://user-images.githubusercontent.com/27495055/80116721-3896c580-857e-11ea-84da-4efe13011d50.png" width="240" height="430" alt="Screenshot_1587652933"/>   |
+
+| DROPDOWN                                                                                                                                                   | BOTTOMSHEET                                                                                                                                                            | DIALOG                                                                                                                                                                 |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="https://user-images.githubusercontent.com/27495055/80116593-10a76200-857e-11ea-9600-f2cfef5b2965.png" height="430" alt="Screenshot_1587652933"/> | <img src="https://user-images.githubusercontent.com/27495055/80116677-261c8c00-857e-11ea-8167-a3de563287f4.png" width="240" height="430" alt="Screenshot_1587652933"/> | <img src="https://user-images.githubusercontent.com/27495055/80116721-3896c580-857e-11ea-84da-4efe13011d50.png" width="240" height="430" alt="Screenshot_1587652933"/> |
 
 ### Testing
+
 Widget Key parameters and Helper classes are now available for integration testing check out this example 🎯 [Integration Testing Example](https://gist.github.com/natintosh/b7b40d75240a65fdb63942a4b36753e5)
 
-
 # Contributions
+
 If you encounter any problem or the library is missing a feature feel free to open an issue. Feel free to fork, improve the package and make pull request.
 
 ## Co-contributors
+
 Interested in becoming a co-contributors checkout this link for more info [discussions/201](https://github.com/natintosh/intl_phone_number_input/discussions/201)
 
-# Contributors 
+# Contributors
+
 <a href="https://github.com/natintosh/intl_phone_number_input/graphs/contributors">
   <img src="https://contributors-img.web.app/image?repo=natintosh/intl_phone_number_input" />
 </a>
@@ -206,14 +209,15 @@ Made with [contributors-img](https://contributors-img.web.app).
 
 # Dependencies
 
-* [libphonenumber](https://pub.dev/packages/libphonenumber)
-* [equatable](https://pub.dev/packages/equatable)
+- [libphonenumber](https://pub.dev/packages/libphonenumber)
+- [equatable](https://pub.dev/packages/equatable)
 
 # Credits
 
 A special thanks to [niinyarko](https://github.com/niinyarko/flutter-international-phone-input)
 
 # FAQ
-* For discussions and frequent question and concerns, check [here](https://github.com/natintosh/intl_phone_number_input/discussions/159)
 
-Test commit
+- For discussions and frequent question and concerns, check [here](https://github.com/natintosh/intl_phone_number_input/discussions/159)
+
+Test commit 2
