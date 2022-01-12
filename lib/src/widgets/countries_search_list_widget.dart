@@ -1,9 +1,9 @@
+import 'package:animated_gesture_detector/animated_gesture_detector.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/src/models/country_model.dart';
 import 'package:intl_phone_number_input/src/utils/util.dart';
 import 'package:intl_phone_number_input/src/widgets/item.dart';
 import 'package:intl_phone_number_input/src/widgets/text_styles.resource.dart';
-import 'package:animated_gesture_detector/animated_gesture_detector.dart';
 
 /// Creates a list of Countries with a search textfield.
 class CountrySearchListWidget extends StatefulWidget {
