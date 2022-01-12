@@ -28,4 +28,4 @@ dev_dependencies:
 flutter:
   assets:
     - assets/flags/
-    - assets/country-code.png
+    - assets/images/

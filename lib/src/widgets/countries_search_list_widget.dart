@@ -55,7 +55,7 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
       children: <Widget>[
         const SizedBox(height: 50),
         Image.asset(
-          'assets/country-code.png',
+          'assets/images/country-code.png',
           color: const Color.fromARGB(255, 37, 37, 37),
           width: 155,
           height: 25,
