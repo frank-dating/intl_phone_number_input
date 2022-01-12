@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frank/ui/resources/colors.resource.dart';
 import 'package:intl_phone_number_input/src/models/country_model.dart';
 import 'package:intl_phone_number_input/src/utils/selector_config.dart';
 import 'package:intl_phone_number_input/src/widgets/countries_search_list_widget.dart';
@@ -82,7 +81,7 @@ class SelectorButton extends StatelessWidget {
               builder: (context, controller) {
                 return Container(
                   decoration: const ShapeDecoration(
-                    color: ColorsResource.mainWhite,
+                    color: Color.fromARGB(255, 252, 252, 252),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(20),

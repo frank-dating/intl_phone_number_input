@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/src/models/country_model.dart';
-import 'package:intl_phone_number_input/src/utils/test/test_helper.dart';
 import 'package:intl_phone_number_input/src/utils/util.dart';
+import 'package:intl_phone_number_input/src/widgets/item.dart';
 import 'package:intl_phone_number_input/src/widgets/text_styles.resource.dart';
 import 'package:animated_gesture_detector/animated_gesture_detector.dart';
 
