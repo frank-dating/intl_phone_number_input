@@ -59,6 +59,7 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
           color: const Color.fromARGB(255, 37, 37, 37),
           width: 155,
           height: 25,
+          package: 'intl_phone_number_input',
         ),
         const SizedBox(height: 30),
         Padding(

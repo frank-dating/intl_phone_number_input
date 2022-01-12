@@ -64,6 +64,7 @@ class Flag extends StatelessWidget {
             child: Image.asset(
               country!.flagUri,
               fit: BoxFit.cover,
+              package: 'intl_phone_number_input',
             ),
           )
         : const SizedBox.shrink();
