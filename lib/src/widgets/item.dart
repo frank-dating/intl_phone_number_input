@@ -1,48 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:intl_phone_number_input/src/models/country_model.dart';
-import 'package:intl_phone_number_input/src/utils/util.dart';
+import 'package:frank/ui/widgets/animated_gesture_detector.dart';
+import 'package:frank/ui/widgets/phone_input/src/models/country_model.dart';
 
-/// [Item]
 class Item extends StatelessWidget {
   final Country? country;
-  final bool? showFlag;
-  final bool? useEmoji;
   final TextStyle? textStyle;
-  final bool withCountryNames;
   final double? leadingPadding;
   final bool trailingSpace;
+  final VoidCallback? onTap;
 
   const Item({
     Key? key,
     this.country,
-    this.showFlag,
-    this.useEmoji,
     this.textStyle,
-    this.withCountryNames = false,
     this.leadingPadding = 12,
     this.trailingSpace = true,
+    this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String dialCode = (country?.dialCode ?? '');
+    var dialCode = country?.dialCode ?? '';
     if (trailingSpace) {
-      dialCode = dialCode.padRight(5, "   ");
+      dialCode = dialCode.padRight(5, '   ');
     }
     return Container(
+      color: Colors.transparent,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           SizedBox(width: leadingPadding),
-          _Flag(
-            country: country,
-            showFlag: showFlag,
-            useEmoji: useEmoji,
+          AnimatedGestureDetector(
+            onTap: onTap,
+            child: Flag(country: country),
           ),
-          SizedBox(width: 12.0),
+          const SizedBox(width: 6.0),
           Text(
-            '$dialCode',
+            dialCode,
             textDirection: TextDirection.ltr,
             style: textStyle,
           ),
@@ -52,32 +46,26 @@ class Item extends StatelessWidget {
   }
 }
 
-class _Flag extends StatelessWidget {
+class Flag extends StatelessWidget {
   final Country? country;
-  final bool? showFlag;
-  final bool? useEmoji;
 
-  const _Flag({Key? key, this.country, this.showFlag, this.useEmoji})
-      : super(key: key);
+  const Flag({Key? key, this.country}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return country != null && showFlag!
+    return country != null
         ? Container(
-            child: useEmoji!
-                ? Text(
-                    Utils.generateFlagEmojiUnicode(country?.alpha2Code ?? ''),
-                    style: Theme.of(context).textTheme.headline5,
-                  )
-                : Image.asset(
-                    country!.flagUri,
-                    width: 32.0,
-                    package: 'intl_phone_number_input',
-                    errorBuilder: (context, error, stackTrace) {
-                      return SizedBox.shrink();
-                    },
-                  ),
+            clipBehavior: Clip.hardEdge,
+            height: 22,
+            width: 30,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(4.0)),
+            ),
+            child: Image.asset(
+              country!.flagUri,
+              fit: BoxFit.cover,
+            ),
           )
-        : SizedBox.shrink();
+        : const SizedBox.shrink();
   }
 }

@@ -1,5 +1,5 @@
-import 'package:intl_phone_number_input/src/utils/phone_number.dart';
-import 'package:libphonenumber_plugin/libphonenumber_plugin.dart' as p;
+import 'package:frank/ui/widgets/phone_input/libphone/libphonenumber_plugin.dart' as p;
+import 'package:frank/ui/widgets/phone_input/src/utils/phone_number.dart';
 
 /// A wrapper class [PhoneNumberUtil] that basically switch between plugin available for `Web` or `Android or IOS` and `Other platforms` when available.
 class PhoneNumberUtil {
@@ -78,10 +78,10 @@ class RegionInfo {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['regionCode'] = this.regionPrefix;
-    data['isoCode'] = this.isoCode;
-    data['formattedPhoneNumber'] = this.formattedPhoneNumber;
+    final data = <String, dynamic>{};
+    data['regionCode'] = regionPrefix;
+    data['isoCode'] = isoCode;
+    data['formattedPhoneNumber'] = formattedPhoneNumber;
     return data;
   }
 
@@ -120,39 +120,6 @@ class PhoneNumberTypeUtil {
         return PhoneNumberType.VOICEMAIL;
       default:
         return PhoneNumberType.UNKNOWN;
-    }
-  }
-}
-
-/// Extension on PhoneNumberType
-extension phonenumbertypeproperties on PhoneNumberType {
-  /// Returns the index [int] of the current `PhoneNumberType`
-  int get value {
-    switch (this) {
-      case PhoneNumberType.FIXED_LINE:
-        return 0;
-      case PhoneNumberType.MOBILE:
-        return 1;
-      case PhoneNumberType.FIXED_LINE_OR_MOBILE:
-        return 2;
-      case PhoneNumberType.TOLL_FREE:
-        return 3;
-      case PhoneNumberType.PREMIUM_RATE:
-        return 4;
-      case PhoneNumberType.SHARED_COST:
-        return 5;
-      case PhoneNumberType.VOIP:
-        return 6;
-      case PhoneNumberType.PERSONAL_NUMBER:
-        return 7;
-      case PhoneNumberType.PREMIUM_RATE:
-        return 8;
-      case PhoneNumberType.UAN:
-        return 9;
-      case PhoneNumberType.VOICEMAIL:
-        return 10;
-      default:
-        return -1;
     }
   }
 }

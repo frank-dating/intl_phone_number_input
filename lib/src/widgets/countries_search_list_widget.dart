@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:intl_phone_number_input/src/models/country_model.dart';
-import 'package:intl_phone_number_input/src/utils/test/test_helper.dart';
-import 'package:intl_phone_number_input/src/utils/util.dart';
+import 'package:frank/ui/resources/assets_funny_texts.dart';
+import 'package:frank/ui/resources/assets_images.dart';
+import 'package:frank/ui/resources/colors.resource.dart';
+import 'package:frank/ui/resources/gradients/gradients.dart';
+import 'package:frank/ui/resources/text_styles.resource.dart';
+import 'package:frank/ui/widgets/animated_gesture_detector.dart';
+import 'package:frank/ui/widgets/phone_input/src/models/country_model.dart';
+import 'package:frank/ui/widgets/phone_input/src/utils/util.dart';
+import 'package:frank/ui/widgets/phone_input/src/widgets/item.dart';
 
 /// Creates a list of Countries with a search textfield.
 class CountrySearchListWidget extends StatefulWidget {
@@ -10,18 +16,15 @@ class CountrySearchListWidget extends StatefulWidget {
   final String? locale;
   final ScrollController? scrollController;
   final bool autoFocus;
-  final bool? showFlags;
-  final bool? useEmoji;
 
-  CountrySearchListWidget(
+  const CountrySearchListWidget(
     this.countries,
     this.locale, {
+    Key? key,
     this.searchBoxDecoration,
     this.scrollController,
-    this.showFlags,
-    this.useEmoji,
     this.autoFocus = false,
-  });
+  }) : super(key: key);
 
   @override
   _CountrySearchListWidgetState createState() =>
@@ -29,12 +32,12 @@ class CountrySearchListWidget extends StatefulWidget {
 }
 
 class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
-  late TextEditingController _searchController = TextEditingController();
+  late final TextEditingController _searchController = TextEditingController();
   late List<Country> filteredCountries;
 
   @override
   void initState() {
-    final String value = _searchController.text.trim();
+    final value = _searchController.text.trim();
     filteredCountries = Utils.filterCountries(
       countries: widget.countries,
       locale: widget.locale,
@@ -49,26 +52,26 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
     super.dispose();
   }
 
-  /// Returns [InputDecoration] of the search box
-  InputDecoration getSearchBoxDecoration() {
-    return widget.searchBoxDecoration ??
-        InputDecoration(labelText: 'Search by country name or dial code');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
+        const SizedBox(height: 50),
+        Image.asset(
+          AssetFunnyTexts.countryCode,
+          color: ColorsResource.mainBlack,
+          width: 155,
+          height: 25,
+        ),
+        const SizedBox(height: 30),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 38),
           child: TextFormField(
-            key: Key(TestHelper.CountrySearchInputKeyValue),
-            decoration: getSearchBoxDecoration(),
+            decoration: widget.searchBoxDecoration,
             controller: _searchController,
-            autofocus: widget.autoFocus,
             onChanged: (value) {
-              final String value = _searchController.text.trim();
+              final value = _searchController.text.trim();
               return setState(
                 () => filteredCountries = Utils.filterCountries(
                   countries: widget.countries,
@@ -80,43 +83,39 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
           ),
         ),
         Flexible(
-          child: ListView.builder(
-            controller: widget.scrollController,
-            shrinkWrap: true,
-            itemCount: filteredCountries.length,
-            itemBuilder: (BuildContext context, int index) {
-              Country country = filteredCountries[index];
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              ListView.builder(
+                controller: widget.scrollController,
+                itemCount: filteredCountries.length + 2,
+                itemBuilder: (context, index) {
+                  if (index == 0 || index == filteredCountries.length + 1) {
+                    return const SizedBox(height: 12);
+                  }
 
-              return DirectionalCountryListTile(
-                country: country,
-                locale: widget.locale,
-                showFlags: widget.showFlags!,
-                useEmoji: widget.useEmoji!,
-              );
-              // return ListTile(
-              //   key: Key(TestHelper.countryItemKeyValue(country.alpha2Code)),
-              //   leading: widget.showFlags!
-              //       ? _Flag(country: country, useEmoji: widget.useEmoji)
-              //       : null,
-              //   title: Align(
-              //     alignment: AlignmentDirectional.centerStart,
-              //     child: Text(
-              //       '${Utils.getCountryName(country, widget.locale)}',
-              //       textDirection: Directionality.of(context),
-              //       textAlign: TextAlign.start,
-              //     ),
-              //   ),
-              //   subtitle: Align(
-              //     alignment: AlignmentDirectional.centerStart,
-              //     child: Text(
-              //       '${country.dialCode ?? ''}',
-              //       textDirection: TextDirection.ltr,
-              //       textAlign: TextAlign.start,
-              //     ),
-              //   ),
-              //   onTap: () => Navigator.of(context).pop(country),
-              // );
-            },
+                  final country = filteredCountries[index - 1];
+
+                  return DirectionalCountryListTile(
+                    country: country,
+                    locale: widget.locale,
+                  );
+                },
+              ),
+              Container(
+                height: 30,
+                decoration: BoxDecoration(
+                    gradient: baseGradient(
+                  colors: [
+                    ColorsResource.mainWhite,
+                    ColorsResource.mainWhite,
+                    ColorsResource.mainWhite.withOpacity(0),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                )),
+              ),
+            ],
           ),
         ),
       ],
@@ -134,67 +133,51 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
 class DirectionalCountryListTile extends StatelessWidget {
   final Country country;
   final String? locale;
-  final bool showFlags;
-  final bool useEmoji;
 
   const DirectionalCountryListTile({
     Key? key,
     required this.country,
     required this.locale,
-    required this.showFlags,
-    required this.useEmoji,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      key: Key(TestHelper.countryItemKeyValue(country.alpha2Code)),
-      leading: (showFlags ? _Flag(country: country, useEmoji: useEmoji) : null),
-      title: Align(
-        alignment: AlignmentDirectional.centerStart,
-        child: Text(
-          '${Utils.getCountryName(country, locale)}',
-          textDirection: Directionality.of(context),
-          textAlign: TextAlign.start,
-        ),
-      ),
-      subtitle: Align(
-        alignment: AlignmentDirectional.centerStart,
-        child: Text(
-          '${country.dialCode ?? ''}',
-          textDirection: TextDirection.ltr,
-          textAlign: TextAlign.start,
-        ),
-      ),
+    return AnimatedGestureDetector(
       onTap: () => Navigator.of(context).pop(country),
+      child: Padding(
+        padding: const EdgeInsets.only(
+          left: 49,
+          top: 10,
+          bottom: 10,
+        ),
+        child: Row(
+          children: [
+            Flag(country: country),
+            const SizedBox(width: 6),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${Utils.getCountryName(country, locale)}',
+                  textDirection: Directionality.of(context),
+                  textAlign: TextAlign.start,
+                  style: TextStylesResource.quincyWeight400.copyWith(
+                    fontSize: 12,
+                  ),
+                ),
+                Text(
+                  '${country.dialCode ?? ''}',
+                  textDirection: TextDirection.ltr,
+                  textAlign: TextAlign.start,
+                  style: TextStylesResource.quincyWeight400.copyWith(
+                    fontSize: 9,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
-  }
-}
-
-class _Flag extends StatelessWidget {
-  final Country? country;
-  final bool? useEmoji;
-
-  const _Flag({Key? key, this.country, this.useEmoji}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return country != null
-        ? Container(
-            child: useEmoji!
-                ? Text(
-                    Utils.generateFlagEmojiUnicode(country?.alpha2Code ?? ''),
-                    style: Theme.of(context).textTheme.headline5,
-                  )
-                : country?.flagUri != null
-                    ? CircleAvatar(
-                        backgroundImage: AssetImage(
-                          country!.flagUri,
-                          package: 'intl_phone_number_input',
-                        ),
-                      )
-                    : SizedBox.shrink(),
-          )
-        : SizedBox.shrink();
   }
 }

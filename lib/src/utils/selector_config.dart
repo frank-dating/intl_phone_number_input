@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl_phone_number_input/src/models/country_model.dart';
-import 'package:intl_phone_number_input/src/widgets/input_widget.dart';
+import 'package:frank/ui/widgets/phone_input/src/models/country_model.dart';
+import 'package:frank/ui/widgets/phone_input/src/widgets/input_widget.dart';
 
 /// [CountryComparator] takes two countries: A and B.
 ///
@@ -9,15 +9,6 @@ typedef CountryComparator = int Function(Country, Country);
 
 /// [SelectorConfig] contains selector button configurations
 class SelectorConfig {
-  /// [selectorType], for selector button type
-  final PhoneInputSelectorType selectorType;
-
-  /// [showFlags], displays flag along side countries info on selector button
-  /// and list items within the selector
-  final bool showFlags;
-
-  /// [useEmoji], uses emoji flags instead of png assets
-  final bool useEmoji;
 
   /// [countryComparator], sort the country list according to the comparator.
   ///
@@ -34,9 +25,6 @@ class SelectorConfig {
   final bool trailingSpace;
 
   const SelectorConfig({
-    this.selectorType = PhoneInputSelectorType.DROPDOWN,
-    this.showFlags = true,
-    this.useEmoji = false,
     this.countryComparator,
     this.setSelectorButtonAsPrefixIcon = false,
     this.leadingPadding,
