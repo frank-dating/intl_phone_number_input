@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:frank/ui/resources/assets_funny_texts.dart';
-import 'package:frank/ui/resources/assets_images.dart';
-import 'package:frank/ui/resources/colors.resource.dart';
-import 'package:frank/ui/resources/gradients/gradients.dart';
-import 'package:frank/ui/resources/text_styles.resource.dart';
-import 'package:frank/ui/widgets/animated_gesture_detector.dart';
-import 'package:frank/ui/widgets/phone_input/src/models/country_model.dart';
-import 'package:frank/ui/widgets/phone_input/src/utils/util.dart';
-import 'package:frank/ui/widgets/phone_input/src/widgets/item.dart';
+import 'package:intl_phone_number_input/src/models/country_model.dart';
+import 'package:intl_phone_number_input/src/utils/test/test_helper.dart';
+import 'package:intl_phone_number_input/src/utils/util.dart';
+import 'package:intl_phone_number_input/src/widgets/text_styles.resource.dart';
+import 'package:animated_gesture_detector/animated_gesture_detector.dart';
 
 /// Creates a list of Countries with a search textfield.
 class CountrySearchListWidget extends StatefulWidget {
@@ -59,8 +55,8 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
       children: <Widget>[
         const SizedBox(height: 50),
         Image.asset(
-          AssetFunnyTexts.countryCode,
-          color: ColorsResource.mainBlack,
+          'assets/country-code.png',
+          color: const Color.fromARGB(255, 37, 37, 37),
           width: 155,
           height: 25,
         ),
@@ -105,15 +101,16 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
               Container(
                 height: 30,
                 decoration: BoxDecoration(
-                    gradient: baseGradient(
-                  colors: [
-                    ColorsResource.mainWhite,
-                    ColorsResource.mainWhite,
-                    ColorsResource.mainWhite.withOpacity(0),
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                )),
+                  gradient: LinearGradient(
+                    colors: [
+                      Color.fromARGB(255, 252, 252, 252),
+                      Color.fromARGB(255, 252, 252, 252),
+                      Color.fromARGB(255, 252, 252, 252).withOpacity(0),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
               ),
             ],
           ),

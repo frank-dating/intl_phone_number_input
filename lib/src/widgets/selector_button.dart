@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frank/ui/resources/colors.resource.dart';
-import 'package:frank/ui/widgets/phone_input/src/models/country_model.dart';
-import 'package:frank/ui/widgets/phone_input/src/utils/selector_config.dart';
-import 'package:frank/ui/widgets/phone_input/src/widgets/countries_search_list_widget.dart';
-import 'package:frank/ui/widgets/phone_input/src/widgets/item.dart';
+import 'package:intl_phone_number_input/src/models/country_model.dart';
+import 'package:intl_phone_number_input/src/utils/selector_config.dart';
+import 'package:intl_phone_number_input/src/widgets/countries_search_list_widget.dart';
+import 'package:intl_phone_number_input/src/widgets/item.dart';
 
 /// [SelectorButton]
 class SelectorButton extends StatelessWidget {

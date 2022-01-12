@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:frank/ui/widgets/phone_input/src/utils/phone_number/phone_number_util.dart';
+import 'package:intl_phone_number_input/src/utils/phone_number/phone_number_util.dart';
 
 typedef OnInputFormatted<T> = void Function(T value);
 
@@ -30,13 +29,13 @@ class AsYouTypeFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    int oldValueLength = oldValue.text.length;
-    int newValueLength = newValue.text.length;
+    final oldValueLength = oldValue.text.length;
+    final newValueLength = newValue.text.length;
 
     if (newValueLength > 0 && newValueLength > oldValueLength) {
-      String newValueText = newValue.text;
-      String rawText = newValueText.replaceAll(separatorChars, '');
-      String textToParse = dialCode + rawText;
+      final newValueText = newValue.text;
+      final rawText = newValueText.replaceAll(separatorChars, '');
+      final textToParse = dialCode + rawText;
 
       final _ = newValueText
           .substring(
@@ -46,16 +45,16 @@ class AsYouTypeFormatter extends TextInputFormatter {
 
       formatAsYouType(input: textToParse).then(
         (String? value) {
-          String parsedText = parsePhoneNumber(value);
+          final parsedText = parsePhoneNumber(value);
 
-          int offset =
+          var offset =
               newValue.selection.end == -1 ? 0 : newValue.selection.end;
 
           if (separatorChars.hasMatch(parsedText)) {
-            String valueInInputIndex = parsedText[offset - 1];
+            final valueInInputIndex = parsedText[offset - 1];
 
             if (offset < parsedText.length) {
-              int offsetDifference = parsedText.length - offset;
+              final offsetDifference = parsedText.length - offset;
 
               if (offsetDifference < 2) {
                 if (separatorChars.hasMatch(valueInInputIndex)) {
@@ -63,7 +62,7 @@ class AsYouTypeFormatter extends TextInputFormatter {
                 } else {
                   bool isLastChar;
                   try {
-                    var _ = newValueText[newValue.selection.end];
+                    final _ = newValueText[newValue.selection.end];
                     isLastChar = false;
                   } on RangeError {
                     isLastChar = true;
@@ -98,7 +97,7 @@ class AsYouTypeFormatter extends TextInputFormatter {
   /// returns a [Future<String>] of the formatted phone number.
   Future<String?> formatAsYouType({required String input}) async {
     try {
-      String? formattedPhoneNumber = await PhoneNumberUtil.formatAsYouType(
+      final String? formattedPhoneNumber = await PhoneNumberUtil.formatAsYouType(
           phoneNumber: input, isoCode: isoCode);
       return formattedPhoneNumber;
     } on Exception {
@@ -111,8 +110,8 @@ class AsYouTypeFormatter extends TextInputFormatter {
   String parsePhoneNumber(String? phoneNumber) {
     if (dialCode.length > 4) {
       if (isPartOfNorthAmericanNumberingPlan(dialCode)) {
-        String northAmericaDialCode = '+1';
-        String countryDialCodeWithSpace = northAmericaDialCode +
+        final northAmericaDialCode = '+1';
+        final countryDialCodeWithSpace = northAmericaDialCode +
             ' ' +
             dialCode.replaceFirst(northAmericaDialCode, '');
 

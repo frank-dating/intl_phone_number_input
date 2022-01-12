@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frank/ui/widgets/animated_gesture_detector.dart';
-import 'package:frank/ui/widgets/phone_input/src/models/country_model.dart';
+import 'package:animated_gesture_detector/animated_gesture_detector.dart';
+import 'package:intl_phone_number_input/src/models/country_model.dart';
 
 class Item extends StatelessWidget {
   final Country? country;

@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:frank/ui/widgets/phone_input/intl_phone_number_input.dart';
-import 'package:frank/ui/widgets/phone_input/src/models/country_model.dart';
-import 'package:frank/ui/widgets/phone_input/src/providers/country_provider.dart';
-import 'package:frank/ui/widgets/phone_input/src/utils/phone_number/phone_number_util.dart';
-import 'package:frank/ui/widgets/phone_input/src/utils/test/test_helper.dart';
-import 'package:frank/ui/widgets/phone_input/src/utils/util.dart';
-import 'package:frank/ui/widgets/phone_input/src/utils/widget_view.dart';
-import 'package:frank/ui/widgets/phone_input/src/widgets/selector_button.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:intl_phone_number_input/src/models/country_model.dart';
+import 'package:intl_phone_number_input/src/providers/country_provider.dart';
+import 'package:intl_phone_number_input/src/utils/phone_number/phone_number_util.dart';
+import 'package:intl_phone_number_input/src/utils/test/test_helper.dart';
+import 'package:intl_phone_number_input/src/utils/util.dart';
+import 'package:intl_phone_number_input/src/utils/widget_view.dart';
+import 'package:intl_phone_number_input/src/widgets/selector_button.dart';
 
 /// A [TextFormField] for [InternationalPhoneNumberInput].
 ///
