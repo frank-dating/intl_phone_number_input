@@ -9,6 +9,7 @@ import 'package:intl_phone_number_input/src/utils/phone_number/phone_number_util
 import 'package:intl_phone_number_input/src/utils/selector_config.dart';
 import 'package:intl_phone_number_input/src/utils/util.dart';
 import 'package:intl_phone_number_input/src/utils/widget_view.dart';
+import 'package:intl_phone_number_input/src/widgets/animated_gradient.dart';
 import 'package:intl_phone_number_input/src/widgets/selector_button.dart';
 
 /// A [TextFormField] for [InternationalPhoneNumberInput].
@@ -334,31 +335,74 @@ class _InputWidgetView
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: state.controller,
-      cursorColor: widget.cursorColor,
-      focusNode: widget.focusNode,
-      enabled: widget.isEnabled,
-      autofocus: widget.autoFocus,
-      keyboardType: TextInputType.number,
-      textInputAction: widget.keyboardAction,
-      style: widget.textStyle,
-      decoration: state.getInputDecoration(widget.inputDecoration),
-      textAlign: widget.textAlign,
-      textAlignVertical: widget.textAlignVertical,
-      onEditingComplete: widget.onSubmit,
-      onFieldSubmitted: widget.onFieldSubmitted,
-      autovalidateMode: widget.autoValidateMode,
-      autofillHints: widget.autofillHints,
-      validator: widget.validator,
-      onSaved: state.onSaved,
-      maxLength: widget.maxLength,
-      scrollPadding: widget.scrollPadding,
-      inputFormatters: [
-        LengthLimitingTextInputFormatter(widget.maxLength),
-        FilteringTextInputFormatter.digitsOnly,
+    return Stack(
+      children: [
+        AnimatedGradient(
+          colors: const [
+            Color(0xFFC200BB),
+            Color(0xFF204FF6),
+          ],
+          child: IgnorePointer(
+            child: TextFormField(
+              controller: state.controller,
+              cursorColor: widget.cursorColor,
+              focusNode: widget.focusNode,
+              enabled: widget.isEnabled,
+              autofocus: widget.autoFocus,
+              keyboardType: TextInputType.number,
+              textInputAction: widget.keyboardAction,
+              style: widget.textStyle,
+              decoration: state.getInputDecoration(widget.inputDecoration),
+              textAlign: widget.textAlign,
+              textAlignVertical: widget.textAlignVertical,
+              onEditingComplete: widget.onSubmit,
+              onFieldSubmitted: widget.onFieldSubmitted,
+              autovalidateMode: widget.autoValidateMode,
+              autofillHints: widget.autofillHints,
+              validator: widget.validator,
+              onSaved: state.onSaved,
+              maxLength: widget.maxLength,
+              scrollPadding: widget.scrollPadding,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(widget.maxLength),
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              onChanged: state.onChanged,
+            ),
+          ),
+        ),
+        TextFormField(
+          controller: state.controller,
+          cursorColor: widget.cursorColor,
+          focusNode: widget.focusNode,
+          enabled: widget.isEnabled,
+          autofocus: widget.autoFocus,
+          keyboardType: TextInputType.number,
+          textInputAction: widget.keyboardAction,
+          style: widget.textStyle,
+          decoration: state.getInputDecoration(widget.inputDecoration).copyWith(
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+              ),
+          textAlign: widget.textAlign,
+          textAlignVertical: widget.textAlignVertical,
+          onEditingComplete: widget.onSubmit,
+          onFieldSubmitted: widget.onFieldSubmitted,
+          autovalidateMode: widget.autoValidateMode,
+          autofillHints: widget.autofillHints,
+          validator: widget.validator,
+          onSaved: state.onSaved,
+          maxLength: widget.maxLength,
+          scrollPadding: widget.scrollPadding,
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(widget.maxLength),
+            FilteringTextInputFormatter.digitsOnly,
+          ],
+          onChanged: state.onChanged,
+        ),
       ],
-      onChanged: state.onChanged,
     );
   }
 }
