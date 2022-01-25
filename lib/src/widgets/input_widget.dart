@@ -348,34 +348,9 @@ class _InputWidgetView
               border: Border.all(color: Colors.white, width: 1),
             ),
             child: IgnorePointer(
-              child: Opacity(
-                opacity: 0.0,
-                child: TextFormField(
-                  controller: state.controller,
-                  cursorColor: widget.cursorColor,
-                  focusNode: widget.focusNode,
-                  enabled: widget.isEnabled,
-                  autofocus: widget.autoFocus,
-                  keyboardType: TextInputType.number,
-                  textInputAction: widget.keyboardAction,
-                  style: widget.textStyle,
-                  decoration: state.getInputDecoration(widget.inputDecoration),
-                  textAlign: widget.textAlign,
-                  textAlignVertical: widget.textAlignVertical,
-                  onEditingComplete: widget.onSubmit,
-                  onFieldSubmitted: widget.onFieldSubmitted,
-                  autovalidateMode: widget.autoValidateMode,
-                  autofillHints: widget.autofillHints,
-                  validator: widget.validator,
-                  onSaved: state.onSaved,
-                  maxLength: widget.maxLength,
-                  scrollPadding: widget.scrollPadding,
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(widget.maxLength),
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                  onChanged: state.onChanged,
-                ),
+              child: TextFormField(
+                decoration:
+                    state.getInputDecoration(widget.inputDecoration)
               ),
             ),
           ),
@@ -394,6 +369,7 @@ class _InputWidgetView
                 enabledBorder: InputBorder.none,
                 errorBorder: InputBorder.none,
                 disabledBorder: InputBorder.none,
+                fillColor: Colors.transparent,
               ),
           textAlign: widget.textAlign,
           textAlignVertical: widget.textAlignVertical,
