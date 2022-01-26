@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Directionality(
-        textDirection: TextDirection.rtl,
+        textDirection: TextDirection.ltr,
         child: Scaffold(
           appBar: AppBar(title: Text('Demo')),
           body: MyHomePage(),
@@ -57,34 +57,66 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    return Center(
-      child: InternationalPhoneNumberInput(
-        initialValue: number,
-        searchBoxDecoration: decoration(
-          label: "country",
-          mainBorderColor: ColorsResource.mainBlack,
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-          shouldValidate: false,
+    return Form(
+      key: formKey,
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            InternationalPhoneNumberInput(
+              initialValue: number,
+              searchBoxDecoration: decoration(
+                label: "country",
+                mainBorderColor: ColorsResource.mainBlack,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                shouldValidate: false,
+              ),
+              onInputValidated: (bool value) {
+                print(value);
+              },
+              validator: _validator,
+              formatInput: false,
+              ignoreBlank: true,
+              cursorColor: ColorsResource.black,
+              selectorConfig: const SelectorConfig(
+                setSelectorButtonAsPrefixIcon: true,
+                trailingSpace: false,
+                leadingPadding: 20,
+              ),
+              autoValidateMode: AutovalidateMode.onUserInteraction,
+              selectorTextStyle: textStyle,
+              textStyle: textStyle,
+              inputDecoration: inputDecoration,
+              onInputChanged: (phone) {},
+              onCountryLoaded: (country) {},
+            ),
+            ElevatedButton(
+              onPressed: () {
+                formKey.currentState?.validate();
+              },
+              child: Text('Validate'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                getPhoneNumber('+15417543010');
+              },
+              child: Text('Update'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                formKey.currentState?.save();
+              },
+              child: Text('Save'),
+            ),
+          ],
         ),
-        formatInput: false,
-        ignoreBlank: true,
-        cursorColor: ColorsResource.black,
-        selectorConfig: const SelectorConfig(
-          setSelectorButtonAsPrefixIcon: true,
-          trailingSpace: false,
-          leadingPadding: 20,
-        ),
-        autoValidateMode: AutovalidateMode.onUserInteraction,
-        selectorTextStyle: textStyle,
-        textStyle: textStyle,
-        inputDecoration: inputDecoration,
-        onInputChanged: (phone) {
-        },
-        onCountryLoaded: (country) {
-
-        },
       ),
     );
+  }
+
+  String? _validator(String? inputValue) {
+    return "errror";
   }
 
   void getPhoneNumber(String phoneNumber) async {
@@ -130,21 +162,21 @@ InputDecoration decoration({
       helperText: shouldValidate ? '' : null,
       helperStyle: shouldValidate
           ? TextStylesResource.sourceSansWeight400.copyWith(
-        color: ColorsResource.mainWhite,
-        fontSize: 9,
-      )
+              color: ColorsResource.mainWhite,
+              fontSize: 9,
+            )
           : null,
       suffixIcon: icon != null
           ? Container(
-        margin: const EdgeInsets.only(right: 18),
-        child: icon,
-      )
+              margin: const EdgeInsets.only(right: 18),
+              child: icon,
+            )
           : null,
       suffixIconConstraints: icon != null
           ? const BoxConstraints(
-        minHeight: 20,
-        minWidth: 20,
-      )
+              minHeight: 20,
+              minWidth: 20,
+            )
           : null,
       errorStyle: TextStylesResource.sourceSansWeight400.copyWith(
         color: ColorsResource.mainWhite,
@@ -157,9 +189,9 @@ InputDecoration decoration({
       focusedBorder: _inputBorder(color: mainBorderColor, radius: radius),
       enabledBorder: _inputBorder(color: mainBorderColor, radius: radius),
       errorBorder:
-      _inputBorder(color: ColorsResource.mainWhite, radius: radius),
+          _inputBorder(color: mainBorderColor, radius: radius),
       focusedErrorBorder:
-      _inputBorder(color: ColorsResource.mainWhite, radius: radius),
+          _inputBorder(color: mainBorderColor, radius: radius),
     );
 
 InputBorder _inputBorder({
