@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:intlphonenumberinputtest/text_styles.resource.dart';
+
+import 'colors.resource.dart';
 
 void main() => runApp(MyApp());
 
@@ -40,26 +43,46 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = TextStylesResource.sourceSansWeight400.copyWith(
+      color: ColorsResource.mainBlack,
+      fontSize: 17.0,
+    );
+
+    final inputDecoration = decoration(
+      label: "number",
+      icon: Container(
+        color: Colors.blue,
+        height: 16,
+        width: 16,
+      ),
+    );
+
     return Center(
       child: InternationalPhoneNumberInput(
-        onInputChanged: (PhoneNumber number) {
-          print(number.phoneNumber);
-        },
-        onInputValidated: (bool value) {
-          print(value);
-        },
-        ignoreBlank: false,
-        autoValidateMode: AutovalidateMode.disabled,
-        selectorTextStyle: TextStyle(color: Colors.black),
         initialValue: number,
-        textFieldController: controller,
+        searchBoxDecoration: decoration(
+          label: "country",
+          mainBorderColor: ColorsResource.mainBlack,
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+          shouldValidate: false,
+        ),
         formatInput: false,
-        inputBorder: OutlineInputBorder(),
-        onSaved: (PhoneNumber number) {
-          print('On Saved: $number');
+        ignoreBlank: true,
+        cursorColor: ColorsResource.black,
+        selectorConfig: const SelectorConfig(
+          setSelectorButtonAsPrefixIcon: true,
+          trailingSpace: false,
+          leadingPadding: 20,
+        ),
+        autoValidateMode: AutovalidateMode.onUserInteraction,
+        selectorTextStyle: textStyle,
+        textStyle: textStyle,
+        inputDecoration: inputDecoration,
+        onInputChanged: (phone) {
         },
-        onCountryLoaded: (Country) {},
-        inputDecoration: InputDecoration(),
+        onCountryLoaded: (country) {
+
+        },
       ),
     );
   }
@@ -78,4 +101,76 @@ class _MyHomePageState extends State<MyHomePage> {
     controller.dispose();
     super.dispose();
   }
+}
+
+InputDecoration decoration({
+  String? label,
+  Widget? icon,
+  EdgeInsets? padding,
+  bool shouldValidate = true,
+  Color mainBorderColor = ColorsResource.mainWhite,
+  Color? fillColor,
+  double radius = 100.0,
+}) =>
+    InputDecoration(
+      contentPadding: padding ??
+          const EdgeInsets.symmetric(
+            vertical: 15,
+            horizontal: 16,
+          ),
+      isCollapsed: true,
+      isDense: true,
+      hintText: label,
+      hintStyle: TextStylesResource.sourceSansWeight400.copyWith(
+        color: ColorsResource.mainBlack,
+        fontSize: 17.0,
+      ),
+      filled: fillColor != null,
+      fillColor: fillColor,
+      helperText: shouldValidate ? '' : null,
+      helperStyle: shouldValidate
+          ? TextStylesResource.sourceSansWeight400.copyWith(
+        color: ColorsResource.mainWhite,
+        fontSize: 9,
+      )
+          : null,
+      suffixIcon: icon != null
+          ? Container(
+        margin: const EdgeInsets.only(right: 18),
+        child: icon,
+      )
+          : null,
+      suffixIconConstraints: icon != null
+          ? const BoxConstraints(
+        minHeight: 20,
+        minWidth: 20,
+      )
+          : null,
+      errorStyle: TextStylesResource.sourceSansWeight400.copyWith(
+        color: ColorsResource.mainWhite,
+        fontSize: 9,
+      ),
+      counterStyle: TextStylesResource.sourceSansWeight400.copyWith(
+        color: Colors.transparent,
+        fontSize: 9,
+      ),
+      focusedBorder: _inputBorder(color: mainBorderColor, radius: radius),
+      enabledBorder: _inputBorder(color: mainBorderColor, radius: radius),
+      errorBorder:
+      _inputBorder(color: ColorsResource.mainWhite, radius: radius),
+      focusedErrorBorder:
+      _inputBorder(color: ColorsResource.mainWhite, radius: radius),
+    );
+
+InputBorder _inputBorder({
+  Color color = ColorsResource.mainBlack,
+  required double radius,
+}) {
+  return OutlineInputBorder(
+    borderRadius: BorderRadius.circular(radius),
+    borderSide: BorderSide(
+      color: color,
+      width: 1,
+    ),
+  );
 }

@@ -351,8 +351,11 @@ class _InputWidgetView
               child: Opacity(
                 opacity: 0.0,
                 child: TextFormField(
-                  decoration:
-                      state.getInputDecoration(widget.inputDecoration)
+                  decoration: InputDecoration(
+                    contentPadding: state
+                        .getInputDecoration(widget.inputDecoration)
+                        .contentPadding,
+                  ),
                 ),
               ),
             ),
