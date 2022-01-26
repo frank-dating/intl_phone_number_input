@@ -40,52 +40,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            InternationalPhoneNumberInput(
-              onInputChanged: (PhoneNumber number) {
-                print(number.phoneNumber);
-              },
-              onInputValidated: (bool value) {
-                print(value);
-              },
-              ignoreBlank: false,
-              autoValidateMode: AutovalidateMode.disabled,
-              selectorTextStyle: TextStyle(color: Colors.black),
-              initialValue: number,
-              textFieldController: controller,
-              formatInput: false,
-              inputBorder: OutlineInputBorder(),
-              onSaved: (PhoneNumber number) {
-                print('On Saved: $number');
-              },
-              onCountryLoaded: (Country) {},
-              inputDecoration: InputDecoration(),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                formKey.currentState?.validate();
-              },
-              child: Text('Validate'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                getPhoneNumber('+15417543010');
-              },
-              child: Text('Update'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                formKey.currentState?.save();
-              },
-              child: Text('Save'),
-            ),
-          ],
-        ),
+    return Center(
+      child: InternationalPhoneNumberInput(
+        onInputChanged: (PhoneNumber number) {
+          print(number.phoneNumber);
+        },
+        onInputValidated: (bool value) {
+          print(value);
+        },
+        ignoreBlank: false,
+        autoValidateMode: AutovalidateMode.disabled,
+        selectorTextStyle: TextStyle(color: Colors.black),
+        initialValue: number,
+        textFieldController: controller,
+        formatInput: false,
+        inputBorder: OutlineInputBorder(),
+        onSaved: (PhoneNumber number) {
+          print('On Saved: $number');
+        },
+        onCountryLoaded: (Country) {},
+        inputDecoration: InputDecoration(),
       ),
     );
   }

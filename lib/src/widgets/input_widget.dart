@@ -337,7 +337,7 @@ class _InputWidgetView
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        AnimatedGradient(
+        /*AnimatedGradient(
           colors: const [
             Color(0xFFC200BB),
             Color(0xFF204FF6),
@@ -354,7 +354,7 @@ class _InputWidgetView
               ),
             ),
           ),
-        ),
+        ),*/
         TextFormField(
           controller: state.controller,
           cursorColor: widget.cursorColor,
