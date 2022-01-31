@@ -68,6 +68,7 @@ class InternationalPhoneNumberInput extends StatefulWidget {
     this.countries,
     required this.onCountryLoaded,
     this.additionalErrorStream,
+    this.mainErrorStream,
   }) : super(key: key);
 
   final SelectorConfig selectorConfig;
@@ -121,6 +122,7 @@ class InternationalPhoneNumberInput extends StatefulWidget {
   final Function(Country?) onCountryLoaded;
 
   final ValueStream<String?>? additionalErrorStream;
+  final ValueStream<String?>? mainErrorStream;
 
   @override
   State<StatefulWidget> createState() => _InputWidgetState();
@@ -135,15 +137,6 @@ class _InputWidgetState extends State<InternationalPhoneNumberInput> {
   bool isNotValid = true;
 
   String errorMessage = '';
-
-  final _errorSubject = BehaviorSubject<String?>.seeded(null);
-  late final ValueStream<String?> _errorStream = _errorSubject;
-
-  @override
-  void dispose() {
-    _errorSubject.close();
-    super.dispose();
-  }
 
   @override
   void initState() {
@@ -434,7 +427,7 @@ class _InputWidgetView
         final error = sError.data;
 
         return RxBuilder<String?>(
-          stream: state._errorStream,
+          stream: widget.mainErrorStream,
           builder: (context, sError) {
             state.errorMessage = error ?? sError.data ?? state.errorMessage;
             return AnimatedOpacity(
