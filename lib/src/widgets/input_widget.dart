@@ -10,7 +10,10 @@ import 'package:intl_phone_number_input/src/utils/selector_config.dart';
 import 'package:intl_phone_number_input/src/utils/util.dart';
 import 'package:intl_phone_number_input/src/utils/widget_view.dart';
 import 'package:intl_phone_number_input/src/widgets/animated_gradient.dart';
+import 'package:intl_phone_number_input/src/widgets/rx_builder.dart';
 import 'package:intl_phone_number_input/src/widgets/selector_button.dart';
+import 'package:intl_phone_number_input/src/widgets/text_styles.resource.dart';
+import 'package:rxdart/rxdart.dart';
 
 /// A [TextFormField] for [InternationalPhoneNumberInput].
 ///
@@ -64,6 +67,7 @@ class InternationalPhoneNumberInput extends StatefulWidget {
     this.autofillHints,
     this.countries,
     required this.onCountryLoaded,
+    this.additionalErrorStream,
   }) : super(key: key);
 
   final SelectorConfig selectorConfig;
@@ -116,6 +120,8 @@ class InternationalPhoneNumberInput extends StatefulWidget {
 
   final Function(Country?) onCountryLoaded;
 
+  final ValueStream<String?>? additionalErrorStream;
+
   @override
   State<StatefulWidget> createState() => _InputWidgetState();
 }
@@ -127,6 +133,17 @@ class _InputWidgetState extends State<InternationalPhoneNumberInput> {
   Country? country;
   List<Country> countries = [];
   bool isNotValid = true;
+
+  String errorMessage = '';
+
+  final _errorSubject = BehaviorSubject<String?>.seeded(null);
+  late final ValueStream<String?> _errorStream = _errorSubject;
+
+  @override
+  void dispose() {
+    _errorSubject.close();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -330,7 +347,7 @@ class _InputWidgetView
     extends WidgetView<InternationalPhoneNumberInput, _InputWidgetState> {
   final _InputWidgetState state;
 
-  const _InputWidgetView({Key? key, required this.state})
+  _InputWidgetView({Key? key, required this.state})
       : super(key: key, state: state);
 
   @override
@@ -342,23 +359,29 @@ class _InputWidgetView
             Color(0xFFC200BB),
             Color(0xFF204FF6),
           ],
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100.0),
-              border: Border.all(color: Colors.white, width: 1),
-            ),
-            child: IgnorePointer(
-              child: Opacity(
-                opacity: 0.0,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    contentPadding: state
-                        .getInputDecoration(widget.inputDecoration)
-                        .contentPadding,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100.0),
+                  border: Border.all(color: Colors.white, width: 1),
+                ),
+                child: IgnorePointer(
+                  child: Opacity(
+                    opacity: 0.0,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        contentPadding: state
+                            .getInputDecoration(widget.inputDecoration)
+                            .contentPadding,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+              _errorMessage(),
+            ],
           ),
         ),
         Theme(
@@ -401,6 +424,37 @@ class _InputWidgetView
           ),
         ),
       ],
+    );
+  }
+
+  Widget _errorMessage() {
+    return RxBuilder<String?>(
+      stream: widget.additionalErrorStream,
+      builder: (context, sError) {
+        final error = sError.data;
+
+        return RxBuilder<String?>(
+          stream: state._errorStream,
+          builder: (context, sError) {
+            state.errorMessage = error ?? sError.data ?? state.errorMessage;
+            return AnimatedOpacity(
+              duration: Duration(milliseconds: 150),
+              opacity: (error ?? sError.data) != null ? 1 : 0,
+              child: Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 20, top: 3),
+                child: Text(
+                  state.errorMessage,
+                  style: TextStylesResource.sourceSansWeight400.copyWith(
+                    color: Colors.white,
+                    fontSize: 9,
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

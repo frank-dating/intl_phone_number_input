@@ -14,6 +14,7 @@ dependencies:
   equatable: ^2.0.3
   collection: ^1.15.0
   animated_gesture_detector: ^1.0.0
+  rxdart: ^0.27.2
 
 dev_dependencies:
   flutter_test:
