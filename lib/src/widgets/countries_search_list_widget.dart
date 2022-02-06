@@ -151,7 +151,7 @@ class DirectionalCountryListTile extends StatelessWidget {
         child: Row(
           children: [
             Flag(country: country),
-            const SizedBox(width: 6),
+            const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -160,7 +160,8 @@ class DirectionalCountryListTile extends StatelessWidget {
                   textDirection: Directionality.of(context),
                   textAlign: TextAlign.start,
                   style: TextStylesResource.quincyWeight400.copyWith(
-                    fontSize: 12,
+                    fontSize: 14,
+                    color: Color.fromARGB(255, 37, 37, 37),
                   ),
                 ),
                 Text(
@@ -168,7 +169,8 @@ class DirectionalCountryListTile extends StatelessWidget {
                   textDirection: TextDirection.ltr,
                   textAlign: TextAlign.start,
                   style: TextStylesResource.quincyWeight400.copyWith(
-                    fontSize: 9,
+                    fontSize: 11,
+                    color: Color.fromARGB(255, 37, 37, 37),
                   ),
                 ),
               ],

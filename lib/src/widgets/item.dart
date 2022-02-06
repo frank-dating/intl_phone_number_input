@@ -56,8 +56,8 @@ class Flag extends StatelessWidget {
     return country != null
         ? Container(
             clipBehavior: Clip.hardEdge,
-            height: 22,
-            width: 30,
+            height: 24,
+            width: 32,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(4.0)),
             ),
